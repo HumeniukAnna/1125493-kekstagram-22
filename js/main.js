@@ -1,4 +1,4 @@
-const generateRandom = (from, to) => {
+const generateRandomNumber = (from, to) => {
   if (from < 0 || to < 0) {
     throw new Error('Invalid parameters: should be positive or zero');
   }
@@ -14,4 +14,4 @@ const generateRandom = (from, to) => {
   return Math.floor(Math.random() * (to - from)) + from;
 };
 
-const validateLength = (value, maxStringLength) => value.length < maxStringLength;
+const validateStringLength = (value, maxStringLength) => value.length < maxStringLength;
