@@ -1,4 +1,4 @@
-import {generateRandomNumber} from './util';
+import {generateRandomNumber} from './util.js';
 
 const COMMENT_SIZE = 7;
 
