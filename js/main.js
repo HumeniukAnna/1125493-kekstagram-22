@@ -1,1 +1,1 @@
-import {generatePhotoArray} from './data.js';
+import './feed.js';
