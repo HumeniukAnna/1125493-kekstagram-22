@@ -8,13 +8,23 @@ const imgPreview = document.querySelector('.img-upload__preview');
 const sliderElement = document.querySelector('.effect-level__slider');
 const valueElement = document.querySelector('.effect-level__value');
 const config = {
-  grayscale: {
+  none: {
+    range: {
+      min: 0,
+      max: 100,
+    },
+    start: 100,
+    step: 1,
+  },
+
+  chrome: {
     range: {
       min: 0,
       max: 1,
     },
     start: 1,
     step: 0.1,
+    name:  'grayscale',
   },
 
   sepia: {
@@ -24,39 +34,44 @@ const config = {
     },
     start: 1,
     step: 0.1,
+    name: 'sepia',
   },
 
-  invert: {
+  marvin: {
     range: {
       min: 0,
       max: 100,
     },
     start: 100,
     step: 1,
+    name: 'invert',
   },
 
-  blur: {
+  phobos: {
     range: {
       min: 0,
       max: 3,//px
     },
     start:3,
     step: 0.1, //px
+    name: 'blur',
   },
 
-  brightness: {
+  heat: {
     range: {
       min: 1,
       max: 3,
     },
     start:3,
     step: 0.1,
+    name: 'brightness',
   },
 }
 let scalePicture = function (number) {
   imgPreview.style.transform = `scale(${number/100})`;
 };
-//маштаб
+
+//масштаб
 scaleControlSmaller.addEventListener('click', () => {
   let scaleControlValue = parseInt(scaleControl.value);
   if (scaleControlValue > 25) {
@@ -77,34 +92,43 @@ scaleControlBigger.addEventListener('click', () => {
   scalePicture(parseInt(scaleControl.value));
 });
 
+let effectActive = config.none;
+
+let allEffects = document.querySelector('.img-upload__effects'); //найти родителя
+let effect = document.querySelector('.img-upload__preview');
+let modifiedPic = effect.querySelector('img');
 //ползунок
 // eslint-disable-next-line no-undef
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 100,
-  step: 1,
+noUiSlider.create(sliderElement, Object.assign({
   connect: 'lower',
-});
+},effectActive));
 
 sliderElement.noUiSlider
   .on('update', (values, handle) => {
     valueElement.value = values[handle];
+    if (effectActive.name) {
+      modifiedPic.style.filter = effectActive.name + `(${values[handle]})`;}
+    else  {
+      modifiedPic.style.filter = 'none';
+    }
   });
 
 //эффект
-let allEffects = document.querySelector('.img-upload__effects'); //найти родителя
-let effect = document.querySelector('.img-upload__preview');
-let modifiedPic = effect.querySelector('img');
+
 let effectChangeHandler = function (evt) {
   if (evt.target.matches('input[type="radio"]')) {
     let effectValue = evt.target.value;
+    document.querySelector('.effect-level')
+      .classList.toggle('hidden', effectValue === 'none');
     let newEffect = 'effects__preview--' + effectValue;
     modifiedPic.className = (newEffect);
-    sliderElement.noUiSlider.updateOptions(config[newEffect]);
+    sliderElement.noUiSlider.updateOptions(config[effectValue]);
+    effectActive = config[effectValue];
+    if (effectActive.name) {
+      modifiedPic.style.filter = effectActive.name + `(${effectActive.max})`;}
+    else  {
+      modifiedPic.style.filter = 'none';
+    }
   }
 };
 allEffects.addEventListener('change', effectChangeHandler);
-//выбран оригинал - sliderElement.noUiSlider.destroy();
