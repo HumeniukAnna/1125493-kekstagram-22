@@ -14,6 +14,17 @@ const generateRandomNumber = (from, to) => {
   return Math.floor(Math.random() * (to - from)) + from;
 };
 
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
+const closeElement = (elementToClick, elementToHide) => elementToClick
+  .addEventListener('click', function() {
+    document.querySelector('body')
+      .classList.remove('modal-open');
+    elementToHide.classList.add('hidden');
+  });
+
 const validateStringLength = (value, maxStringLength) => value.length < maxStringLength;
 
-export {generateRandomNumber, validateStringLength};
+export {generateRandomNumber, validateStringLength, isEscEvent, closeElement};
