@@ -107,7 +107,12 @@ sliderElement.noUiSlider
   .on('update', (values, handle) => {
     valueElement.value = values[handle];
     if (effectActive.name) {
-      modifiedPic.style.filter = effectActive.name + `(${values[handle]})`;}
+      if(effectActive.name === 'blur') {
+        modifiedPic.style.filter = effectActive.name + `(${values[handle] + 'px'})`;
+      } else {
+        modifiedPic.style.filter = effectActive.name + `(${values[handle]})`;
+      }
+    }
     else  {
       modifiedPic.style.filter = 'none';
     }
