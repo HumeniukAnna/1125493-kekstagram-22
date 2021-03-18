@@ -50,10 +50,10 @@ const config = {
   phobos: {
     range: {
       min: 0,
-      max: 3,//px
+      max: 3,
     },
     start:3,
-    step: 0.1, //px
+    step: 0.1,
     name: 'blur',
   },
 
@@ -122,13 +122,8 @@ let effectChangeHandler = function (evt) {
       .classList.toggle('hidden', effectValue === 'none');
     let newEffect = 'effects__preview--' + effectValue;
     modifiedPic.className = (newEffect);
-    sliderElement.noUiSlider.updateOptions(config[effectValue]);
     effectActive = config[effectValue];
-    if (effectActive.name) {
-      modifiedPic.style.filter = effectActive.name + `(${effectActive.max})`;}
-    else  {
-      modifiedPic.style.filter = 'none';
-    }
+    sliderElement.noUiSlider.updateOptions(config[effectValue]);
   }
 };
 allEffects.addEventListener('change', effectChangeHandler);
