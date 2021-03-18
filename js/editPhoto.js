@@ -103,10 +103,8 @@ let effectChangeHandler = function (evt) {
     let effectValue = evt.target.value;
     let newEffect = 'effects__preview--' + effectValue;
     modifiedPic.className = (newEffect);
-    sliderElement.noUiSlider.updateOptions(config['effectValue']);
+    sliderElement.noUiSlider.updateOptions(config[newEffect]);
   }
 };
-
 allEffects.addEventListener('change', effectChangeHandler);
-
 //выбран оригинал - sliderElement.noUiSlider.destroy();
