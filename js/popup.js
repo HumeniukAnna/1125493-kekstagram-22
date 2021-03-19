@@ -1,3 +1,5 @@
+import {isEscEvent, closeElement} from './util.js';
+
 const popup = document.querySelector('.big-picture');
 
 const showBigPicture = (pictureElement, photo) => {
@@ -48,12 +50,19 @@ const showBigPicture = (pictureElement, photo) => {
 };
 
 
-popup.querySelector('.big-picture__preview')
-  .querySelector('.big-picture__cancel')
-  .addEventListener('click', function() {
+const bigPictureCancel = popup.querySelector('.big-picture__preview')
+  .querySelector('.big-picture__cancel');
+
+
+closeElement(bigPictureCancel, popup);
+
+document.addEventListener('keydown', (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
     document.querySelector('body')
       .classList.remove('modal-open');
     popup.classList.add('hidden');
-  });
+  }
+});
 
 export {showBigPicture} ;
