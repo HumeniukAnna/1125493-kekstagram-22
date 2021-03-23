@@ -1,4 +1,5 @@
 import {isEscEvent, closeElement} from './util.js';
+// import {descriptionTextArea} from './form.js';
 
 const popup = document.querySelector('.big-picture');
 
@@ -57,6 +58,11 @@ const bigPictureCancel = popup.querySelector('.big-picture__preview')
 closeElement(bigPictureCancel, popup);
 
 document.addEventListener('keydown', (evt) => {
+  //остановить закрытие формы
+  // if (descriptionTextArea.focus) {
+  //   evt.stopPropagation()
+  // } else {
+
   if (isEscEvent(evt)) {
     evt.preventDefault();
     document.querySelector('body')
