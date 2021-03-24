@@ -1,4 +1,5 @@
 import {isEscEvent, closeElement} from './util.js';
+// import {descriptionTextArea} from './form.js';
 
 const popup = document.querySelector('.big-picture');
 
