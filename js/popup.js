@@ -1,4 +1,4 @@
-import {isEscEvent, closeElement} from './util.js';
+import {isEscEvent} from './util.js';
 // import {descriptionTextArea} from './form.js';
 
 const popup = document.querySelector('.big-picture');
@@ -30,9 +30,6 @@ const showBigPicture = (pictureElement, photo) => {
       .classList.add('hidden');
     social.querySelector('.comments-loader')
       .classList.add('hidden');
-    document.querySelector('body').classList.add('modal-open');
-
-
 
     photo.comments.forEach((comment) => {
       const comments = social.querySelector('.social__comments');
@@ -47,23 +44,33 @@ const showBigPicture = (pictureElement, photo) => {
 
       comments.appendChild(commentElement);
     })
+    openUserModal();
   });
 };
 
+const bigPictureCancel = document.querySelector('.big-picture__cancel');
 
-const bigPictureCancel = popup.querySelector('.big-picture__preview')
-  .querySelector('.big-picture__cancel');
+bigPictureCancel.addEventListener('click', () => {
+  closeUserModal();
+})
 
-
-closeElement(bigPictureCancel, popup);
-
-document.addEventListener('keydown', (evt) => {
+const onPopupEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    document.querySelector('body')
-      .classList.remove('modal-open');
-    popup.classList.add('hidden');
+    closeUserModal();
   }
-});
+};
+
+const openUserModal = () => {
+  popup.classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
+  document.addEventListener('keydown', onPopupEscKeydown);
+};
+
+const closeUserModal = () => {
+  popup.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+  document.removeEventListener('keydown', onPopupEscKeydown);
+};
 
 export {showBigPicture} ;
