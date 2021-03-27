@@ -1,27 +1,37 @@
-import {closeElement, isEscEvent} from './util.js';
+import {isEscEvent} from './util.js';
+import {clearForm} from './editPhoto.js';
 
 const input = document.querySelector('.img-upload__input');
 const form = document.querySelector('.img-upload__overlay');
 const cancel = document.querySelector('.img-upload__cancel')
-const body = document.querySelector('body');
 
 input.oninput = function () {
-  form.classList.remove('hidden');
-  body.classList.add('.modal-open');
-}
+  openFormModal();
+};
 
-closeElement(cancel, form);
-
-document.addEventListener('keydown', (evt) => {
-  if (isEscEvent(evt)) {
-    evt.preventDefault();
-    document.querySelector('body')
-      .classList.remove('modal-open');
-    form.classList.add('hidden');
-  }
+cancel.addEventListener('click', () => {
+  closeFormModal();
 })
 
-//редактировать маcштаб
+const onFormEscKeydown = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    closeFormModal();
+  }
+};
 
-//эффект (слайдер)
+const openFormModal = () => {
+  form.classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
+  document.addEventListener('keydown', onFormEscKeydown);
+};
 
+const closeFormModal = () => {
+  form.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+  document.removeEventListener('keydown', onFormEscKeydown);
+  //сбросить введенные значения
+  clearForm();
+};
+
+export {closeFormModal};

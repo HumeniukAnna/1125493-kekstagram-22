@@ -1,4 +1,6 @@
 //масштаб
+import {descriptionTextArea,hashtagsInput} from './form.js';
+
 const scaleControlSmaller = document
   .querySelector('.scale__control--smaller');
 const scaleControlBigger = document
@@ -109,6 +111,8 @@ sliderElement.noUiSlider
     if (effectActive.name) {
       if(effectActive.name === 'blur') {
         modifiedPic.style.filter = effectActive.name + `(${values[handle] + 'px'})`;
+      } else if (effectActive.name === 'invert') {
+        modifiedPic.style.filter = effectActive.name + `(${values[handle] + '%'})`;
       } else {
         modifiedPic.style.filter = effectActive.name + `(${values[handle]})`;
       }
@@ -132,3 +136,16 @@ let effectChangeHandler = function (evt) {
   }
 };
 allEffects.addEventListener('change', effectChangeHandler);
+
+//сбросить форму
+let picUploadLine = document.querySelector('.img-upload__overlay')
+
+const clearForm = () => {
+  scaleControl.value = '100%';
+  modifiedPic.style.filter = 'none';
+  picUploadLine.classList.remove('.hidden');
+  descriptionTextArea.value = ' ';
+  hashtagsInput.value = ' ';
+};
+
+export {clearForm};
