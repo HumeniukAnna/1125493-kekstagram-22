@@ -1,4 +1,5 @@
 import {isEscEvent} from './util.js';
+import {clearForm} from './editPhoto.js';
 
 const input = document.querySelector('.img-upload__input');
 const form = document.querySelector('.img-upload__overlay');
@@ -29,7 +30,8 @@ const closeFormModal = () => {
   form.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', onFormEscKeydown);
-  document.querySelector('.img-upload__preview').style ='trasform: scale(1);
+  //сбросить введенные значения
+  clearForm();
 };
 
 export {closeFormModal};

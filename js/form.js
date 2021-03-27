@@ -59,7 +59,7 @@ hashtagsInput.addEventListener('input', () => {
     if (hashtag.length > hashtagMaxLength) {
       return hashtagsInput.setCustomValidity('max length should be less then 20 symbols');
     }
-    const regExp = /^[a-zA-ZА-Яа-я0-9]$/;
+    const regExp = /^#[a-zA-ZА-Яа-я0-9]+$/;
     const regexpHashtags = regExp.test(hashtag);
 
     if (!regexpHashtags) {
@@ -136,4 +136,4 @@ const createErrorMessage = () => {
   });
 };
 
-export {setPicFormSubmit};
+export {setPicFormSubmit, descriptionTextArea, hashtagsInput};
