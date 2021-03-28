@@ -18,13 +18,15 @@ descriptionTextArea.addEventListener('input', () => {
 //остановить всплытие обработчика
 
 descriptionTextArea.addEventListener('keydown', (evt) => {
-  if (isEscEvent(evt))
+  if (isEscEvent(evt)){
     evt.stopPropagation();
+  }
 });
 
 hashtagsInput.addEventListener('keydown', (evt) => {
-  if (isEscEvent(evt))
+  if (isEscEvent(evt)) {
     evt.stopPropagation();
+  }
 });
 
 // //проверка хештега
