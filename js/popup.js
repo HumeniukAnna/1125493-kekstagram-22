@@ -2,9 +2,31 @@ import {isEscEvent} from './util.js';
 // import {descriptionTextArea} from './form.js';
 
 const popup = document.querySelector('.big-picture');
+const allComments = document.querySelector('.social__comments');
+const commentTemplate = document.querySelector('.social__comment').cloneNode(true);
+const moreCommentsButton = document.querySelector('.comments-loader');
+let commentsCounter = 0;
+
+const renderComments = (comments) => {
+  comments.forEach((comment) => {
+    const commentElement = commentTemplate.cloneNode(true);
+    commentElement.querySelector('.social__picture')
+      .src = comment.avatar;
+    commentElement.querySelector('.social__picture')
+      .alt = comment.name;
+    commentElement.querySelector('.social__text')
+      .textContent = comment.message;
+    allComments.appendChild(commentElement);
+  })
+};
+
+const clearComments = () => {
+  document.querySelectorAll('.social__comment')
+    .forEach(el => el.remove());
+};
 
 const showBigPicture = (pictureElement, photo) => {
-  pictureElement.addEventListener('click', function (){
+  pictureElement.addEventListener('click', function () {
     popup.classList.remove('hidden');
     const preview = popup.querySelector('.big-picture__preview');
 
@@ -26,26 +48,24 @@ const showBigPicture = (pictureElement, photo) => {
       .querySelector('.social__caption')
       .textContent = photo.description;
 
-    social.querySelector('.social__comment-count')
-      .classList.add('hidden');
-    social.querySelector('.comments-loader')
-      .classList.add('hidden');
-
-    photo.comments.forEach((comment) => {
-      const comments = social.querySelector('.social__comments');
-      const commentElement = comments.querySelector('.social__comment')
-        .cloneNode(true);
-      commentElement.querySelector('.social__picture')
-        .src = comment.avatar;
-      commentElement.querySelector('.social__picture')
-        .alt = comment.name;
-      commentElement.querySelector('.social__text')
-        .textContent = comment.message;
-
-      comments.appendChild(commentElement);
-    })
+    clearComments();
+    renderComments(photo.comments.slice(0, 5));
+    commentsCounter = Math.min(5, photo.comments.length);
+    verifyCommentsCounter();
     openUserModal();
+
+    moreCommentsButton.addEventListener('click', () => {
+      renderComments(photo.comments.slice(commentsCounter, commentsCounter + 5));
+      commentsCounter = Math.min(commentsCounter + 5, photo.comments.length);
+      verifyCommentsCounter();
+    });
   });
+
+  const verifyCommentsCounter = () => {
+    if (commentsCounter === photo.comments.length) {
+      moreCommentsButton.classList.add('hidden');
+    }
+  };
 };
 
 const bigPictureCancel = document.querySelector('.big-picture__cancel');
