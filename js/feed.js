@@ -54,7 +54,7 @@ const clickFilter = (evt, photos) => {
 };
 
 
-const onError = (onFail) => {
+const onError = () => {
   showAlert('Ошибка');
 };
 
