@@ -1,6 +1,7 @@
 /* global _:readonly */
 import {showBigPicture} from './popup.js';
 import {getData} from './network.js';
+import {showAlert} from './util.js';
 
 const pictureList = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
@@ -53,8 +54,8 @@ const clickFilter = (evt, photos) => {
 };
 
 
-const onError = (onFail) => {
-  console.log('ошибка', onFail);
+const onError = () => {
+  showAlert('Ошибка');
 };
 
 getData(makePic, onError);
