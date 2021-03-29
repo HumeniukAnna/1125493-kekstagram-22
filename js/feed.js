@@ -47,7 +47,8 @@ const changeFilter = (evt, photos) => {
       photos = _.sortBy(photos, 'comments.length').reverse();
     }
     document.querySelectorAll('.img-filters__button')
-      .classList.remove('.img-filters__button--active');
+      .forEach(el => el.classList
+        .remove('.img-filters__button--active'));
     evt.target.classList.add('img-filters__button--active');
     clearPhotoList();
     renderPhotos(photos);

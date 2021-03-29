@@ -1,11 +1,14 @@
 import {isEscEvent} from './util.js';
 import {clearForm} from './edit-photo.js';
 
-const input = document.querySelector('.img-upload__input');
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const fileChooser = document.querySelector('.img-upload__input[type=file]');
 const form = document.querySelector('.img-upload__overlay');
-const cancel = document.querySelector('.img-upload__cancel')
+const cancel = document.querySelector('.img-upload__cancel');
+const preview = document.querySelector('.img-upload__preview')
+  .getElementsByTagName('img')[0];
 
-input.oninput = () => {
+fileChooser.oninput = () => {
   openFormModal();
 };
 
@@ -33,5 +36,25 @@ const closeFormModal = () => {
   //сбросить введенные значения
   clearForm();
 };
+
+fileChooser.addEventListener('change', () => {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => {
+    return fileName.endsWith(it);
+  });
+
+  if (matches) {
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      preview.src = reader.result;
+    });
+
+    reader.readAsDataURL(file);
+  }
+});
+
 
 export {closeFormModal};
