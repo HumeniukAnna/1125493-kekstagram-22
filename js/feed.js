@@ -3,14 +3,12 @@ import {showBigPicture} from './popup.js';
 import {getData} from './network.js';
 import {showAlert} from './util.js';
 
+const RENDER_DELAY = 500;
 const pictureList = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 const filterBlock = document.querySelector('.img-filters');
-
-//должна брать данные из параметров
-const RENDER_DELAY = 500;
 
 const renderPhotos = (photos) => {
   photos.forEach((photo) => {
@@ -32,7 +30,7 @@ const makePic = (photos) => {
   renderPhotos(photos);
   filterBlock.classList.remove('img-filters--inactive');
   filterBlock.addEventListener('click',
-    _.debounce((evt) => clickFilter(evt, photos), RENDER_DELAY))
+    _.debounce((evt) => changeFilter(evt, photos), RENDER_DELAY))
 };
 
 const clearPhotoList = () => {
@@ -40,7 +38,7 @@ const clearPhotoList = () => {
     .forEach(el => el.remove());
 };
 
-const clickFilter = (evt, photos) => {
+const changeFilter = (evt, photos) => {
   const filter = evt.target;
   if (filter.matches('.img-filters__button')) {
     if (filter.matches('#filter-random')) {
@@ -48,6 +46,9 @@ const clickFilter = (evt, photos) => {
     } else if (filter.matches('#filter-discussed')) {
       photos = _.sortBy(photos, 'comments.length').reverse();
     }
+    document.querySelectorAll('.img-filters__button')
+      .classList.remove('.img-filters__button--active');
+    evt.target.classList.add('img-filters__button--active');
     clearPhotoList();
     renderPhotos(photos);
   }

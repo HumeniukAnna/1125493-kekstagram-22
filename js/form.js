@@ -1,7 +1,7 @@
 import {isEscEvent} from './util.js';
 
-const descriptionTextArea = document.querySelector('.text__description');
 const MAX_DESCRIPTION_LENGTH = 140;
+const descriptionTextArea = document.querySelector('.text__description');
 const hashtagsInput = document.querySelector('.text__hashtags');
 
 //проверяем комментарий
@@ -35,7 +35,7 @@ hashtagsInput.addEventListener('input', () => {
   const hashtagMaxLength = 20;
   const hashtagsMaxAmount = 5;
 
-  const onlyUnique = (value, index, self) => {
+  const checkUnique = (value, index, self) => {
     return self.indexOf(value) === index;
   }
 
@@ -43,7 +43,7 @@ hashtagsInput.addEventListener('input', () => {
   hashtagsInput.setCustomValidity('');
   const uniqueHashtags = hashtags
     .map((elem) => elem.toUpperCase())
-    .filter(onlyUnique);
+    .filter(checkUnique);
   if (hashtags.length > uniqueHashtags.length) {
     return hashtagsInput.setCustomValidity('hashtag cannot be used twice');
   }

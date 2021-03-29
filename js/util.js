@@ -18,8 +18,6 @@ const isEscEvent = (evt) => {
   return evt.key === 'Escape' || evt.key === 'Esc';
 };
 
-const validateStringLength = (value, maxStringLength) => value.length < maxStringLength;
-
 const ALERT_SHOW_TIME = 3000;
 
 const showAlert = (message) => {
@@ -43,4 +41,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {generateRandomNumber, validateStringLength, isEscEvent,showAlert};
+export {generateRandomNumber, isEscEvent,showAlert};

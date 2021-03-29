@@ -1,5 +1,5 @@
 import {setPicFormSubmit} from './form.js';
-import {closeFormModal} from './uploadFile.js';
+import {closeFormModal} from './upload-file.js';
 
 const getData = (onSuccess, onFail) => {
   fetch('https://22.javascript.pages.academy/kekstagram/data')

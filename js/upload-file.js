@@ -1,11 +1,11 @@
 import {isEscEvent} from './util.js';
-import {clearForm} from './editPhoto.js';
+import {clearForm} from './edit-photo.js';
 
 const input = document.querySelector('.img-upload__input');
 const form = document.querySelector('.img-upload__overlay');
 const cancel = document.querySelector('.img-upload__cancel')
 
-input.oninput = function () {
+input.oninput = () => {
   openFormModal();
 };
 

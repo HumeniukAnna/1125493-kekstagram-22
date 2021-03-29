@@ -69,7 +69,7 @@ const config = {
     name: 'brightness',
   },
 }
-let scalePicture = function (number) {
+let scalePicture = (number) => {
   imgPreview.style.transform = `scale(${number/100})`;
 };
 
@@ -99,7 +99,7 @@ let effectActive = config.none;
 let allEffects = document.querySelector('.img-upload__effects'); //найти родителя
 let effect = document.querySelector('.img-upload__preview');
 let modifiedPic = effect.querySelector('img');
-//ползунок
+
 // eslint-disable-next-line no-undef
 noUiSlider.create(sliderElement, Object.assign({
   connect: 'lower',
@@ -124,7 +124,7 @@ sliderElement.noUiSlider
 
 //эффект
 
-let effectChangeHandler = function (evt) {
+let effectChangeHandler = (evt) => {
   if (evt.target.matches('input[type="radio"]')) {
     let effectValue = evt.target.value;
     document.querySelector('.effect-level')
@@ -137,7 +137,6 @@ let effectChangeHandler = function (evt) {
 };
 allEffects.addEventListener('change', effectChangeHandler);
 
-//сбросить форму
 let picUploadLine = document.querySelector('.img-upload__overlay')
 
 const clearForm = () => {

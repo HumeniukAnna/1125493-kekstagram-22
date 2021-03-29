@@ -34,39 +34,43 @@ const showBigPicture = (pictureElement, photo) => {
       .querySelector('img')
       .src = photo.url;
 
-    const social = preview.querySelector('.big-picture__social');
-
-    social.querySelector('.social__likes')
+    document.querySelector('.social__likes')
       .querySelector('.likes-count')
       .textContent = photo.likes;
 
-    social.querySelector('.social__comment-count')
+    document.querySelector('.social__comment-count')
       .querySelector('.comments-count')
       .textContent = photo.comments.length;
 
-    social.querySelector('.social__header')
+    document.querySelector('.social__header')
       .querySelector('.social__caption')
       .textContent = photo.description;
+    moreCommentsButton.classList.remove('hidden');
 
     clearComments();
     renderComments(photo.comments.slice(0, 5));
     commentsCounter = Math.min(5, photo.comments.length);
-    verifyCommentsCounter();
+    changeCurrentCommentCount();
+    verifyCommentsCounter(photo);
     openUserModal();
-
-    moreCommentsButton.addEventListener('click', () => {
-      renderComments(photo.comments.slice(commentsCounter, commentsCounter + 5));
-      commentsCounter = Math.min(commentsCounter + 5, photo.comments.length);
-      verifyCommentsCounter();
-    });
   });
 
-  const verifyCommentsCounter = () => {
-    if (commentsCounter === photo.comments.length) {
-      moreCommentsButton.classList.add('hidden');
-    }
-  };
+  moreCommentsButton.addEventListener('click', () => {
+    console.log(commentsCounter);
+    renderComments(photo.comments.slice(commentsCounter, commentsCounter + 5));
+    commentsCounter = Math.min(commentsCounter + 5, photo.comments.length);
+    changeCurrentCommentCount();
+    verifyCommentsCounter(photo);
+  });
 };
+
+const verifyCommentsCounter = (photo) => {
+  if (commentsCounter === photo.comments.length) {
+    moreCommentsButton.classList.add('hidden');
+  }
+};
+
+
 
 const bigPictureCancel = document.querySelector('.big-picture__cancel');
 
@@ -92,5 +96,11 @@ const closeUserModal = () => {
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
 };
+
+const changeCurrentCommentCount = () => {
+  document.querySelector('.social__comment-count')
+    .textContent = commentsCounter + ' из ';
+};
+
 
 export {showBigPicture} ;
