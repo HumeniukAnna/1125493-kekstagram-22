@@ -48,7 +48,7 @@ const changeFilter = (evt, photos) => {
     }
     document.querySelectorAll('.img-filters__button')
       .forEach(el => el.classList
-        .remove('.img-filters__button--active'));
+        .remove('img-filters__button--active'));
     evt.target.classList.add('img-filters__button--active');
     clearPhotoList();
     renderPhotos(photos);
